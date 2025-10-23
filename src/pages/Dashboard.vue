@@ -135,6 +135,8 @@ import { ref, onMounted } from "vue";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "vue-router";
 
+console.log("Supabase URL:", import.meta.env.VITE_SUPABASE_URL);
+
 const router = useRouter();
 const userEmail = ref("");
 const newTask = ref("");
