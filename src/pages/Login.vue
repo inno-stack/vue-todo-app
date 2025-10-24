@@ -2,7 +2,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-700 flex items-center justify-center">
     <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-8 w-full max-w-md">
-      <h2 class="text-white text-3xl font-bold mb-6 text-center">Welcome Back</h2>
+      <h2 class="text-white text-3xl font-bold mb-6 text-center">Welcome Back <br/>To Task Manager</h2>
 
       <!-- Email -->
       <input

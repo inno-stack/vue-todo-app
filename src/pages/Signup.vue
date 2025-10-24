@@ -1,8 +1,14 @@
 <!-- src/pages/Signup.vue -->
 <template>
-  <div class="min-h-screen bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-700 flex items-center justify-center">
-    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-8 w-full max-w-md">
-      <h2 class="text-white text-3xl font-bold mb-6 text-center">Create an Account</h2>
+  <div
+    class="min-h-screen bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-700 flex items-center justify-center"
+  >
+    <div
+      class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-8 w-full max-w-md"
+    >
+      <h2 class="text-white text-3xl font-bold mb-6 text-center">
+        Create an Account<br />To Manager Your Task
+      </h2>
 
       <!-- Email -->
       <input
@@ -25,13 +31,16 @@
         :disabled="loading"
         class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 rounded-lg transition disabled:opacity-60"
       >
-        {{ loading ? 'Please wait...' : 'Sign Up' }}
+        {{ loading ? "Please wait..." : "Sign Up" }}
       </button>
 
       <!-- Redirect to Login -->
       <p class="text-center text-sm mt-4 text-gray-300">
         Already have an account?
-        <RouterLink to="/login" class="text-indigo-400 font-semibold hover:underline">
+        <RouterLink
+          to="/login"
+          class="text-indigo-400 font-semibold hover:underline"
+        >
           Sign In
         </RouterLink>
       </p>
@@ -41,19 +50,19 @@
 
 <script setup>
 // Imports
-import { ref } from 'vue'
-import { useAuth } from '../composables/useAuth'
-import PasswordInput from '../components/PasswordInput.vue'
+import { ref } from "vue";
+import { useAuth } from "../composables/useAuth";
+import PasswordInput from "../components/PasswordInput.vue";
 
 // Supabase composable
-const { signup, loading, message, error } = useAuth()
+const { signup, loading, message, error } = useAuth();
 
 // Reactive form fields
-const email = ref('')
-const password = ref('')
+const email = ref("");
+const password = ref("");
 
 // Handle Signup
 const handleSignup = async () => {
-  await signup(email.value, password.value)
-}
+  await signup(email.value, password.value);
+};
 </script>
