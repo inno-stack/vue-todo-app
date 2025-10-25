@@ -2,22 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom thin scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.6);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.8);
+
+
+/* custom thin scrollbar for modern look */
+.scrollbar-custom {
+  scrollbar-width: thin; /* firefox */
+  scrollbar-color: rgba(148,163,184,0.6) rgba(15,23,42,0.3);
 }
 
-/* Smooth scroll behavior for all */
-html {
-  scroll-behavior: smooth;
+/* webkit */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.12);
+  border-radius: 9999px;
+}
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(99,102,241,0.6), rgba(56,189,248,0.6));
+  border-radius: 9999px;
+}
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(99,102,241,0.8), rgba(56,189,248,0.8));
+}
+
+/* ensure body doesn't introduce horizontal scroll */
+html, body, #app {
+  overflow-x: hidden;
+}
+
+/* better word-wrapping */
+.break-words, .break-words * {
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
