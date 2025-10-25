@@ -38,81 +38,83 @@
       @click="addTask"
       class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg transition"
     >
-      Add
+      Add Task
     </button>
   </div>
 
-  <!-- Scrollable Task List -->
+  <!-- Scrollable Task List --><!-- Task List -->
+<div
+  v-if="tasks.length"
+  class="space-y-4 bg-white/10 p-6 rounded-2xl shadow-md overflow-hidden"
+>
   <div
-    v-if="tasks.length"
-    class="flex-1 overflow-y-auto bg-white/10 p-6 rounded-2xl shadow-md space-y-4 max-h-[60vh] scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-transparent"
+    v-for="task in tasks"
+    :key="task.id"
+    class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition gap-3 break-words"
   >
-    <div
-      v-for="task in tasks"
-      :key="task.id"
-      class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition gap-3"
-    >
-      <div class="flex items-center gap-3 flex-1 min-w-0">
+    <div class="flex items-start sm:items-center gap-3 flex-1 w-full min-w-0">
+      <input
+        type="checkbox"
+        v-model="task.completed"
+        @change="toggleTask(task)"
+        class="w-5 h-5 accent-indigo-500 flex-shrink-0 mt-1 sm:mt-0"
+      />
+
+      <!-- Inline edit input -->
+      <template v-if="editingTaskId === task.id">
         <input
-          type="checkbox"
-          v-model="task.completed"
-          @change="toggleTask(task)"
-          class="w-5 h-5 accent-indigo-500 flex-shrink-0"
+          v-model="editedTitle"
+          type="text"
+          class="w-full bg-white/20 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 break-words"
         />
+      </template>
 
-        <!-- Inline edit input -->
-        <template v-if="editingTaskId === task.id">
-          <input
-            v-model="editedTitle"
-            type="text"
-            class="flex-1 bg-white/20 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 min-w-0"
-          />
-        </template>
-
-        <!-- Normal text -->
-        <template v-else>
-          <span
-            :class="{ 'line-through text-gray-400': task.completed }"
-            class="truncate break-words text-sm sm:text-base"
-          >
-            {{ task.title }}
-          </span>
-        </template>
-      </div>
-
-      <div class="flex gap-3 items-center flex-shrink-0">
-        <button
-          v-if="editingTaskId === task.id"
-          @click="updateTask(task)"
-          class="text-green-400 hover:text-green-500 transition text-sm"
+      <!-- Normal text -->
+      <template v-else>
+        <span
+          :class="{ 'line-through text-gray-400': task.completed }"
+          class="whitespace-normal break-words text-sm sm:text-base leading-snug"
         >
-          Save
-        </button>
-        <button
-          v-if="editingTaskId === task.id"
-          @click="cancelEdit"
-          class="text-gray-400 hover:text-gray-500 transition text-sm"
-        >
-          Cancel
-        </button>
+          {{ task.title }}
+        </span>
+      </template>
+    </div>
 
-        <button
-          v-else
-          @click="startEdit(task)"
-          class="text-blue-400 hover:text-blue-500 transition text-sm"
-        >
-          Edit
-        </button>
+    <!-- Action Buttons -->
+    <div class="flex gap-3 items-center flex-shrink-0">
+      <button
+        v-if="editingTaskId === task.id"
+        @click="updateTask(task)"
+        class="text-green-400 hover:text-green-500 transition text-sm"
+      >
+        Save
+      </button>
+      <button
+        v-if="editingTaskId === task.id"
+        @click="cancelEdit"
+        class="text-gray-400 hover:text-gray-500 transition text-sm"
+      >
+        Cancel
+      </button>
 
-        <button
-          @click="deleteTask(task.id)"
-          class="text-red-400 hover:text-red-500 transition text-sm"
-        >
-          Delete
-        </button>
-      </div>
+      <button
+        v-else
+        @click="startEdit(task)"
+        class="text-blue-400 hover:text-blue-500 transition text-sm"
+      >
+        Edit
+      </button>
+
+      <button
+        @click="deleteTask(task.id)"
+        class="text-red-400 hover:text-red-500 transition text-sm"
+      >
+        Delete
+      </button>
     </div>
   </div>
+</div>
+
 
   <!-- Empty state -->
   <p v-else class="text-gray-400 text-center">
