@@ -1,137 +1,3 @@
-<template>
-  <div
-    class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white flex flex-col"
-  >
-    <!-- Header -->
-    <header
-      class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 px-6 py-4 bg-white/10 backdrop-blur-md border-b border-white/10 shadow-lg"
-    >
-      <h1
-        class="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300 text-center"
-      >
-        Task Manager
-      </h1>
-      <button
-        @click="handleLogout"
-        class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg font-semibold transition-all duration-300 shadow-md w-full sm:w-auto"
-      >
-        Logout
-      </button>
-    </header>
-
-    <!-- Main -->
-    <main class="flex-1 p-6 max-w-3xl mx-auto w-full overflow-hidden flex flex-col space-y-6">
-  <h2 class="text-xl font-semibold">Welcome, {{ userEmail }}</h2>
-
-  <!-- Task Form -->
-  <div
-    class="bg-white/10 p-6 rounded-2xl shadow-md flex flex-col sm:flex-row gap-4"
-  >
-    <input
-      v-model="newTask"
-      type="text"
-      placeholder="What needs to be done?"
-      @keyup.enter="addTask"
-      class="flex-1 p-3 rounded-lg bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-    />
-    <button
-      @click="addTask"
-      class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg transition"
-    >
-      Add Task
-    </button>
-  </div>
-
-  <!-- Scrollable Task List --><!-- Task List -->
-<div
-  v-if="tasks.length"
-  class="space-y-4 bg-white/10 p-6 rounded-2xl shadow-md overflow-hidden"
->
-  <div
-    v-for="task in tasks"
-    :key="task.id"
-    class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition gap-3 break-words"
-  >
-    <div class="flex items-start sm:items-center gap-3 flex-1 w-full min-w-0">
-      <input
-        type="checkbox"
-        v-model="task.completed"
-        @change="toggleTask(task)"
-        class="w-5 h-5 accent-indigo-500 flex-shrink-0 mt-1 sm:mt-0"
-      />
-
-      <!-- Inline edit input -->
-      <template v-if="editingTaskId === task.id">
-        <input
-          v-model="editedTitle"
-          type="text"
-          class="w-full bg-white/20 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 break-words"
-        />
-      </template>
-
-      <!-- Normal text -->
-      <template v-else>
-        <span
-          :class="{ 'line-through text-gray-400': task.completed }"
-          class="whitespace-normal break-words text-sm sm:text-base leading-snug"
-        >
-          {{ task.title }}
-        </span>
-      </template>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="flex gap-3 items-center flex-shrink-0">
-      <button
-        v-if="editingTaskId === task.id"
-        @click="updateTask(task)"
-        class="text-green-400 hover:text-green-500 transition text-sm"
-      >
-        Save
-      </button>
-      <button
-        v-if="editingTaskId === task.id"
-        @click="cancelEdit"
-        class="text-gray-400 hover:text-gray-500 transition text-sm"
-      >
-        Cancel
-      </button>
-
-      <button
-        v-else
-        @click="startEdit(task)"
-        class="text-blue-400 hover:text-blue-500 transition text-sm"
-      >
-        Edit
-      </button>
-
-      <button
-        @click="deleteTask(task.id)"
-        class="text-red-400 hover:text-red-500 transition text-sm"
-      >
-        Delete
-      </button>
-    </div>
-  </div>
-</div>
-
-
-  <!-- Empty state -->
-  <p v-else class="text-gray-400 text-center">
-    No tasks yet. Add one above 👆
-  </p>
-</main>
-
-
-    <!-- Footer -->
-    <footer
-      class="text-center py-4 text-gray-400 text-xs sm:text-sm border-t border-white/10 bg-black/10"
-    >
-      © {{ new Date().getFullYear() }} Task Manager • Built by Innocent
-      <span class="text-blue-300">Vue + Supabase</span>
-    </footer>
-  </div>
-</template>
 
 <script setup>
 import { ref, onMounted } from "vue";
@@ -270,3 +136,140 @@ const handleLogout = async () => {
   router.push("/login");
 };
 </script>
+
+
+
+
+
+
+
+<template>
+  <div
+    class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white flex flex-col overflow-x-hidden overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 scroll-smooth"
+  >
+    <!-- Header -->
+    <header
+      class="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 px-6 py-4 bg-white/10 backdrop-blur-md border-b border-white/10 shadow-lg"
+    >
+      <h1
+        class="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300 text-center"
+      >
+        Task Manager
+      </h1>
+      <button
+        @click="handleLogout"
+        class="bg-red-500 hover:bg-red-600 px-6 py-2 rounded-lg font-semibold transition-all duration-300 shadow-md w-full sm:w-auto"
+      >
+        Logout
+      </button>
+    </header>
+
+    <!-- Main -->
+    <main class="p-6 max-w-3xl mx-auto space-y-6 w-full">
+      <h2 class="text-xl font-semibold">Welcome, {{ userEmail }}</h2>
+
+      <!-- Task Form -->
+      <div
+        class="bg-white/10 p-6 rounded-2xl shadow-md flex flex-col sm:flex-row gap-4"
+      >
+        <input
+          v-model="newTask"
+          type="text"
+          placeholder="What needs to be done?"
+          @keyup.enter="addTask"
+          class="flex-1 p-3 rounded-lg bg-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        />
+        <button
+          @click="addTask"
+          class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg transition"
+        >
+          Add
+        </button>
+      </div>
+
+      <!-- ✅ Task List (scroll-safe & responsive) -->
+      <div
+        v-if="tasks.length"
+        class="space-y-4 bg-white/10 p-6 rounded-2xl shadow-md overflow-hidden"
+      >
+        <div
+          v-for="task in tasks"
+          :key="task.id"
+          class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-lg bg-white/5 hover:bg-white/10 transition gap-3 break-words"
+        >
+          <div class="flex items-start sm:items-center gap-3 flex-1 w-full min-w-0">
+            <input
+              type="checkbox"
+              v-model="task.completed"
+              @change="toggleTask(task)"
+              class="w-5 h-5 accent-indigo-500 flex-shrink-0 mt-1 sm:mt-0"
+            />
+
+            <!-- Inline edit -->
+            <template v-if="editingTaskId === task.id">
+              <input
+                v-model="editedTitle"
+                type="text"
+                class="w-full bg-white/20 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 break-words"
+              />
+            </template>
+
+            <!-- Normal text -->
+            <template v-else>
+              <span
+                :class="{ 'line-through text-gray-400': task.completed }"
+                class="whitespace-normal break-words text-sm sm:text-base leading-snug"
+              >
+                {{ task.title }}
+              </span>
+            </template>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex gap-3 items-center flex-shrink-0">
+            <button
+              v-if="editingTaskId === task.id"
+              @click="updateTask(task)"
+              class="text-green-400 hover:text-green-500 transition text-sm"
+            >
+              Save
+            </button>
+            <button
+              v-if="editingTaskId === task.id"
+              @click="cancelEdit"
+              class="text-gray-400 hover:text-gray-500 transition text-sm"
+            >
+              Cancel
+            </button>
+            <button
+              v-else
+              @click="startEdit(task)"
+              class="text-blue-400 hover:text-blue-500 transition text-sm"
+            >
+              Edit
+            </button>
+            <button
+              @click="deleteTask(task.id)"
+              class="text-red-400 hover:text-red-500 transition text-sm"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p v-else class="text-gray-400 text-center">
+        No tasks yet. Add one above 👆
+      </p>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="text-center py-4 text-gray-400 text-xs sm:text-sm border-t border-white/10 bg-black/10"
+    >
+      © {{ new Date().getFullYear() }} Task Manager • Built by Innocent
+      <span class="text-blue-300">Vue + Supabase</span>
+    </footer>
+  </div>
+</template>
+
