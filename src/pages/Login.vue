@@ -1,8 +1,17 @@
 <!-- src/pages/Login.vue -->
 <template>
-  <div class="min-h-screen bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-700 flex items-center justify-center">
-    <div class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-8 w-full max-w-md">
-      <h2 class="text-white text-3xl font-bold mb-6 text-center">Welcome Back <br/>To Task Manager</h2>
+  <div
+    class="min-h-screen bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-700 flex items-center justify-center"
+  >
+    <div
+      class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-8 w-full max-w-md"
+    >
+      <h2 class="text-white text-3xl font-bold mb-6 text-center">
+        Welcome Back<br/><span class="text-sm font-medium ">To Task Manager. Be Organized and Productive</span>
+      </h2>
+      <!-- <p class="text-white text-1xl font-bold mb-3 text-center">
+        To Task Manager
+      </p> -->
 
       <!-- Email -->
       <input
@@ -25,13 +34,16 @@
         :disabled="loading"
         class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-3 rounded-lg transition disabled:opacity-60"
       >
-        {{ loading ? 'Please wait...' : 'Sign In' }}
+        {{ loading ? "Please wait..." : "Sign In" }}
       </button>
 
       <!-- Signup Redirect -->
       <p class="text-center text-sm mt-4 text-gray-300">
         Don’t have an account?
-        <RouterLink to="/signup" class="text-indigo-400 font-semibold hover:underline">
+        <RouterLink
+          to="/signup"
+          class="text-indigo-400 font-semibold hover:underline"
+        >
           Sign Up
         </RouterLink>
       </p>
@@ -41,19 +53,19 @@
 
 <script setup>
 // Imports
-import { ref } from 'vue'
-import { useAuth } from '../composables/useAuth'
-import PasswordInput from '../components/PasswordInput.vue'
+import { ref } from "vue";
+import { useAuth } from "../composables/useAuth";
+import PasswordInput from "../components/PasswordInput.vue";
 
 // Auth composable
-const { login, loading, message, error } = useAuth()
+const { login, loading, message, error } = useAuth();
 
 // Fields
-const email = ref('')
-const password = ref('')
+const email = ref("");
+const password = ref("");
 
 // Handle login
 const handleLogin = async () => {
-  await login(email.value, password.value)
-}
+  await login(email.value, password.value);
+};
 </script>

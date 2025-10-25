@@ -7,7 +7,7 @@
       class="bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-8 w-full max-w-md"
     >
       <h2 class="text-white text-3xl font-bold mb-6 text-center">
-        Create an Account<br />To Manager Your Task
+        Create an Account<br /><span class="text-sm font-medium ">To Manager Your Task</span>
       </h2>
 
       <!-- Email -->
